@@ -1,0 +1,53 @@
+---
+title: "Day 6"
+author: "Maydah Azhar"
+date: "3/22/2023"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+#Importing data sets 
+
+```{r}
+df<- mtcars
+head(df)
+
+```
+# Heat map
+```{r}
+df<- as.matrix(df)
+heatmap(df, scale = 'column')
+
+```
+
+```{r}
+heatmap(df, scale = 'column', col = terrain.colors((256)))
+
+
+```
+```{r}
+library(RColorBrewer)
+coul<- colorRampPalette(brewer.pal(9,'Blues'))(25)
+heatmap(df, scale = 'column',col= coul)
+
+```
+```{r}
+library(tidyverse)
+data<- volcano %>% 
+  #data wrangling
+  as_tibble() %>%
+  rowid_to_column(var="X") %>% 
+  gather(key="Y",value="Z", -1) %>% 
+  
+  #Change Y to numeric
+  mutate(Y=as.numeric(gsub("V","",Y)))
+
+
+```
+
+```{r}
+data %>% ggplot(aes(X,Y,fill = Z))+geom_tile()
+```
+
+
